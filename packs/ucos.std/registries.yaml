@@ -13,6 +13,7 @@ factKinds:
   - {code: sellability-rule,         owningContext: supply,            resolutionPolicy: sellability-rule.resolution,     regulated: true,  effectKinds: [allow, deny]}
   - {code: context-derivation,       owningContext: context,           resolutionPolicy: context-derivation.resolution,   regulated: false, effectKinds: [derive]}
   - {code: order-decomposition,      owningContext: transaction,       resolutionPolicy: order-decomposition.resolution,  regulated: false, effectKinds: [task-template]}
+  - {code: operating-role,           owningContext: party,             resolutionPolicy: operating-role.resolution,       regulated: true}
   - {code: policy,                   owningContext: policy,            resolutionPolicy: policy.resolution,               regulated: true}
 
 meters:
@@ -87,3 +88,41 @@ taxonomies:
   - {code: ucos.std.device-classes,   hierarchical: false, seedTerms: [desktop, mobile, tablet, kiosk, voice, headless]}
   - {code: ucos.std.jurisdictions,    hierarchical: true,  seedTerms: [], note: "Populated by jurisdiction packs (country, subdivision, tax districts)"}
   - {code: ucos.std.geo-areas,        hierarchical: true,  seedTerms: [], note: "ISO 3166-1/-2 plus tenant areas"}
+
+# Role definitions (DOM-AUTH RoleDefinition seeds). Permissions must be declared by some domain
+# spec's security.permissions (VR-AUTH-02); every role tested in CEL policies must be here (VR-AUTH-01).
+roles:
+  - {code: tenant-admin,        sensitivity: privileged, permissions: [packs.install, packs.uninstall, organization.read, authority.role.assign]}
+  - {code: platform-admin,      sensitivity: privileged, permissions: [cob.create, cob.update, organization.tenant.manage]}
+  - {code: platform-architect,  sensitivity: privileged, permissions: [ontology.type.author, ontology.type.publish, ontology.namespace.admin]}
+  - {code: platform-governance, sensitivity: privileged, permissions: [policy.author.platform, policy.publish, packs.publish]}
+  - {code: catalog-manager,     sensitivity: standard,   permissions: [cob.read, cob.create, cob.update, cob.transition, catalog.author, catalog.preview]}
+  - {code: product-approver,    sensitivity: standard,   permissions: [cob.read, cob.approve]}
+  - {code: product-manager,     sensitivity: standard,   permissions: [offer.read, offer.author, rules.author, cob.read]}
+  - {code: pricing-manager,     sensitivity: standard,   permissions: [pricing.list.read, pricing.list.author, pricing.list.approve, pricing.explain, rules.author]}
+  - {code: sales-rep,           sensitivity: standard,   permissions: [quote.read, quote.create, quote.adjust, order.place.on-behalf, offer.configure]}
+  - {code: sales-manager,       sensitivity: standard,   permissions: [quote.read, quote.create, quote.adjust, quote.approve]}
+  - {code: sales-director,      sensitivity: standard,   permissions: [quote.read, quote.adjust, quote.approve]}
+  - {code: buyer,               sensitivity: standard,   permissions: [catalog.read, order.place, quote.read]}
+  - {code: billing-agent,       sensitivity: standard,   permissions: [billing.read, billing.creditnote.issue, billing.payment.apply]}
+  - {code: finance-controller,  sensitivity: privileged, permissions: [billing.writeoff, billing.creditnote.issue, organization.operating-role.designate]}
+  - {code: payment-ops,         sensitivity: standard,   permissions: [payment.read, payment.refund, payment.capture, payment.void]}
+  - {code: payment-supervisor,  sensitivity: privileged, permissions: [payment.read, payment.refund.manual, payment.reconcile]}
+  - {code: entitlement-admin,   sensitivity: standard,   permissions: [entitlement.read, entitlement.grant, entitlement.grant.manual, entitlement.admin]}
+  - {code: fraud-analyst,       sensitivity: standard,   permissions: [party.read, party.block, decision.read.trace]}
+  - {code: compliance-officer,  sensitivity: privileged, permissions: [policy.author.regulatory, party.block, taxonomy.author, rules.author, decision.read.trace]}
+  - {code: legal-counsel,       sensitivity: privileged, permissions: [evidence.legal-hold, evidence.content.read, contract.approve]}
+  - {code: data-steward,        sensitivity: standard,   permissions: [party.read, party.merge, reference.bind, classification.assign]}
+  - {code: reference-steward,   sensitivity: standard,   permissions: [reference.read, reference.bind, reference.codelist.manage]}
+  - {code: identity-admin,      sensitivity: privileged, permissions: [identity.admin, identity.federation.admin, identity.token.revoke]}
+  - {code: integration-admin,   sensitivity: standard,   permissions: [eventing.subscribe, eventing.registry.read]}
+  - {code: ops-engineer,        sensitivity: privileged, permissions: [eventing.dlq.read, eventing.dlq.redrive, eventing.dlq.discard, eventing.replay]}
+  - {code: context-admin,       sensitivity: standard,   permissions: [context.dimension.author, context.dimension.publish]}
+  - {code: lifecycle-author,    sensitivity: standard,   permissions: [lifecycle.model.author]}
+  - {code: ontology-author,     sensitivity: standard,   permissions: [ontology.type.author, ontology.type.read]}
+  - {code: taxonomy-author,     sensitivity: standard,   permissions: [taxonomy.author, taxonomy.read]}
+  - {code: policy-author,       sensitivity: standard,   permissions: [policy.author.tenant, policy.simulate]}
+  - {code: rules-admin,         sensitivity: standard,   permissions: [rules.author, rules.publish, rules.simulate]}
+  - {code: organization-admin,  sensitivity: privileged, permissions: [organization.legal-entity.manage, organization.namespace.manage, organization.operating-role.designate]}
+  - {code: governance-viewer,   sensitivity: standard,   permissions: [kg.query, decision.read]}
+  - {code: party-viewer,        sensitivity: standard,   permissions: [party.read, kg.query]}

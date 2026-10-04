@@ -10,6 +10,13 @@ header:
   certification: [CR-REL-01, CR-REL-02, CR-REL-03]
   validation: [VR-REL-01]
 
+
+# Hierarchy (DOM-HIER) is the set of hierarchical, acyclic RelationshipTypes plus their closure
+# tables maintained here (PRIN-017).
+subsumes:
+  - domain: DOM-HIER
+    coverage: "Hierarchical reltypes (INV-REL-3), closure table, Traverse, ConstraintGuard acyclicity, CR-REL-01/02"
+
 purpose: >
   Hold every association between UCOS aggregates as a first-class, typed, versioned, time-bounded,
   optionally context-scoped Relationship. Replaces all cross-domain foreign keys and all fixed hierarchies.

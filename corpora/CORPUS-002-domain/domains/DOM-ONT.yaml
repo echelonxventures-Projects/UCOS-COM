@@ -10,6 +10,13 @@ header:
   certification: [CR-ONT-01, CR-ONT-02, CR-ONT-03, CR-ONT-04]
   validation: [VR-ONT-01, VR-ONT-02, VR-ONT-03]
 
+
+# Attributes (DOM-ATTR) are AttributeDefinitions owned by this domain; a separate spec would split
+# ownership of one aggregate (PRIN-001).
+subsumes:
+  - domain: DOM-ATTR
+    coverage: "AttributeDefinition aggregate, Datatype/Cardinality/Constraint value objects, DefineAttribute command, attribute.published event, INV-ONT-7/8, VR-ONT-03, ucos.std attributes.yaml"
+
 purpose: >
   Define, version, validate, and serve the metadata that gives meaning to every commercial object:
   type definitions, attribute definitions, facets, relationship types, and their constraints. The

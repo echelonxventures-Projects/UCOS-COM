@@ -189,6 +189,14 @@ class Corpus:
                 seen_events[ev["type"]] = did
 
         for did, row in self.registry.items():
+            if row.get("status") == "subsumed":
+                parent = row.get("subsumedBy")
+                pspec = self.domain_specs.get(parent)
+                listed = {s.get("domain") for s in (pspec or {}).get("doc", {}).get("subsumes", []) or []}
+                if pspec is None or did not in listed:
+                    self.err("registry", f"{did} subsumed by {parent}, but that spec does not list it under 'subsumes' (VR-002-002-02)")
+                elif self.registry.get(parent, {}).get("boundedContext") != row.get("boundedContext"):
+                    self.err("registry", f"{did} subsumed across bounded contexts ({row.get('boundedContext')} -> {parent})")
             if not re.match(r"^DOM-[A-Z]{3,5}$", did):
                 self.err("registry", f"bad domain id {did} (VR-000-002-03)")
             if row.get("status") == "specified" and did not in self.domain_specs:
@@ -214,11 +222,15 @@ class Corpus:
             specified_ctx.add(ctx)
             for ev in spec["doc"].get("events", []):
                 declared[ctx].add(ev["type"])
+        declared_perms: set[str] = set()
+        for spec in self.domain_specs.values():
+            declared_perms |= set(spec["doc"].get("security", {}).get("permissions", []) or [])
         self.pack_stats = {}
         self.pack_policies: set[str] = set()
         for pdir in sorted(d for d in PACKS.iterdir() if d.is_dir()) if PACKS.exists() else []:
             pc = PackChecker(pdir, self.err, kernel_kinds, std_dims, self.registry, declared, specified_ctx)
             pc.run()
+            pc.check_roles(declared_perms)
             self.pack_stats[pdir.name] = pc.stats
             self.pack_policies |= {f"urn:ucos:{pdir.name}:policy:{n}" for n in pc.policies}
         for did, spec in self.domain_specs.items():
@@ -256,13 +268,15 @@ class Corpus:
             lines.append(f"{mark} {c['id']} {c['title']:<40} {len(arts):>3} artifacts")
         spec = sum(1 for r in self.registry.values() if r.get("status") == "specified")
         real = sum(1 for r in self.registry.values() if r.get("status") == "realized")
+        sub = sum(1 for r in self.registry.values() if r.get("status") == "subsumed")
         lines += ["", "DOMAIN COVERAGE", "=" * 72,
                   f"{spec}/{len(self.registry)} domains fully specified (25 sections), "
-                  f"{real} realized by type packs, {len(self.registry) - spec - real} pending"]
+                  f"{real} realized by type packs, {sub} subsumed by parent specs, "
+                  f"{len(self.registry) - spec - real - sub} pending"]
         by_tier = defaultdict(lambda: [0, 0])
         for r in self.registry.values():
             by_tier[r["tier"]][1] += 1
-            by_tier[r["tier"]][0] += r.get("status") in ("specified", "realized")
+            by_tier[r["tier"]][0] += r.get("status") in ("specified", "realized", "subsumed")
         for tier, (s, n) in sorted(by_tier.items()):
             lines.append(f"  {tier:<10} {s:>3}/{n}")
         lines += ["", "TYPE PACKS", "=" * 72]
@@ -276,7 +290,7 @@ class Corpus:
                     referenced.add(u)
         have = referenced & getattr(self, "pack_policies", set())
         lines.append(f"  ucos.std policies referenced by domain specs: {len(have)}/{len(referenced)} defined in pack")
-        pending = sorted(d for d, r in self.registry.items() if r.get("status") not in ("specified", "realized"))
+        pending = sorted(d for d, r in self.registry.items() if r.get("status") not in ("specified", "realized", "subsumed"))
         lines.append(f"  pending: {', '.join(pending)}")
         return "\n".join(lines)
 

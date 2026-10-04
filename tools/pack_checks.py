@@ -334,10 +334,24 @@ class PackChecker:
         if any(state.get(n) is None and cyc(n) for n in list(graph)):
             self.err("context derivations contain a cycle (RUL-CTX-1)")
 
+    def check_roles(self, declared_permissions: set[str]) -> None:
+        """VR-AUTH-01 (roles used by CEL policies are defined) and VR-AUTH-02 (permissions declared)."""
+        roles = {r["code"]: r for r in self.registries.get("roles", []) or []}
+        for name, p in self.policies.items():
+            body = p.get("body", {})
+            if body.get("language") == "cel":
+                for role in re.findall(r"'([a-z][a-z0-9-]*)' in principal\.roles", body["source"]):
+                    if role not in roles:
+                        self.err(f"policy {name}: role '{role}' not defined in registries.yaml roles (VR-AUTH-01)")
+        for code, r in roles.items():
+            for perm in r.get("permissions", []):
+                if perm not in declared_permissions:
+                    self.err(f"role {code}: permission '{perm}' not declared by any domain spec (VR-AUTH-02)")
+
     def check_registries(self) -> None:
         for key, keyfield in (("factKinds", "code"), ("meters", "code"), ("purposes", "code"),
                               ("effectKinds", "kind"), ("evidenceKinds", "kind"), ("reasonCodes", "code"),
-                              ("taxonomies", "code")):
+                              ("taxonomies", "code"), ("roles", "code")):
             seen = set()
             for e in self.registries.get(key, []) or []:
                 if e[keyfield] in seen:

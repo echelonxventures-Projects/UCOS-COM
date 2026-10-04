@@ -80,7 +80,7 @@ and are needed for regulated replay are stored encrypted under the subject key (
 `POST /v1/decisions/{id}:replay` re-executes the provider at its recorded version against the recorded
 snapshots and returns `{original, replayed, equal: bool, diff}`. Providers MUST be deterministic for
 the same version and snapshots (models: deterministic inference mode, fixed seeds). Replay of a
-regulated decision that is not equal raises `ucos.decision.record.replay-mismatch.v1` (Sev-2).
+regulated decision that is not equal raises `ucos.policy.decision.replay-mismatch.v1` (Sev-2; declared by DOM-DEC).
 
 ## 7. Overrides and appeals
 

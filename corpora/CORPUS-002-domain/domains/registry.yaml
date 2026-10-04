@@ -22,7 +22,7 @@ tierDefinitions:
   extension: Optional bounded context deployed as a certified plugin (CORPUS-028).
 validationRules:
   VR-002-002-01: Every domain id is unique and matches ^DOM-[A-Z]{3,5}$.
-  VR-002-002-02: A domain with status 'specified' has a DOM-<CODE>.yaml file validating against schemas/domain-spec.schema.json; a domain with status 'realized' has tier 'pack' and is listed in a pack's pack.yaml 'realizes' map.
+  VR-002-002-02: A domain with status 'specified' has a DOM-<CODE>.yaml file validating against schemas/domain-spec.schema.json; a domain with status 'realized' has tier 'pack' and is listed in a pack's pack.yaml 'realizes' map; a domain with status 'subsumed' names subsumedBy, a specified domain whose spec lists it under 'subsumes' with coverage.
 domains:
 - id: DOM-IDN
   name: Identity
@@ -36,7 +36,7 @@ domains:
   boundedContext: identity
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-PTY
   name: Party
   boundedContext: party
@@ -49,13 +49,13 @@ domains:
   boundedContext: party
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-AUTH
   name: Authority
   boundedContext: party
   tier: kernel
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-TRST
   name: Trust
   boundedContext: evidence
@@ -93,7 +93,7 @@ domains:
   boundedContext: ontology
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-KNW
   name: Knowledge
   boundedContext: ontology
@@ -111,7 +111,7 @@ domains:
   boundedContext: graph
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-REL
   name: Relationships
   boundedContext: graph
@@ -124,25 +124,28 @@ domains:
   boundedContext: graph
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-REL
 - id: DOM-ATTR
   name: Attributes
   boundedContext: ontology
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-ONT
 - id: DOM-CLS
   name: Classification
   boundedContext: ontology
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-TXO
 - id: DOM-META
   name: Metadata
   boundedContext: ontology
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-COB
   name: Commercial Objects
   boundedContext: commercial-object
@@ -379,7 +382,7 @@ domains:
   boundedContext: policy
   tier: kernel
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
   kernelAggregate: rule
 - id: DOM-POL
   name: Policies
@@ -393,7 +396,7 @@ domains:
   boundedContext: policy
   tier: kernel
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-CRT
   name: Certification
   boundedContext: governance
@@ -423,7 +426,7 @@ domains:
   boundedContext: evidence
   tier: kernel
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-MDM
   name: Master Data
   boundedContext: data
@@ -574,13 +577,13 @@ domains:
   boundedContext: security
   tier: kernel
   owningRole: Chief Security Architect
-  status: registered
+  status: specified
 - id: DOM-PRI
   name: Privacy
   boundedContext: security
   tier: kernel
   owningRole: Chief Security Architect
-  status: registered
+  status: specified
 - id: DOM-FRD
   name: Fraud
   boundedContext: risk
