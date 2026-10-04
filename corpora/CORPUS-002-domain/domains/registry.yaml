@@ -29,7 +29,7 @@ domains:
   boundedContext: identity
   tier: kernel
   owningRole: Chief Security Architect
-  status: registered
+  status: specified
   kernelAggregate: identity
 - id: DOM-REF
   name: Reference
@@ -42,7 +42,7 @@ domains:
   boundedContext: party
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
   kernelAggregate: party
 - id: DOM-ORG
   name: Organization
@@ -67,7 +67,7 @@ domains:
   boundedContext: evidence
   tier: kernel
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
   kernelAggregate: evidence
 - id: DOM-RGT
   name: Rights
@@ -372,7 +372,7 @@ domains:
   boundedContext: lifecycle
   tier: kernel
   owningRole: Chief Architect
-  status: registered
+  status: specified
   kernelAggregate: lifecycle
 - id: DOM-RUL
   name: Rules
@@ -459,7 +459,7 @@ domains:
   boundedContext: eventing
   tier: kernel
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
   kernelAggregate: event
 - id: DOM-DOC
   name: Documents
