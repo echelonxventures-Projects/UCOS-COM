@@ -14,6 +14,11 @@ factKinds:
   - {code: context-derivation,       owningContext: context,           resolutionPolicy: context-derivation.resolution,   regulated: false, effectKinds: [derive]}
   - {code: order-decomposition,      owningContext: transaction,       resolutionPolicy: order-decomposition.resolution,  regulated: false, effectKinds: [task-template]}
   - {code: operating-role,           owningContext: party,             resolutionPolicy: operating-role.resolution,       regulated: true}
+  - {code: tax-rule,                 owningContext: finance,           resolutionPolicy: tax-rule.resolution,             regulated: true,  effectKinds: [rate, exempt, reverse-charge, out-of-scope, facilitator]}
+  - {code: posting-rule,             owningContext: finance,           resolutionPolicy: posting-rule.resolution,         regulated: true,  effectKinds: [journal-template, no-posting]}
+  - {code: revenue-pob-rule,         owningContext: revenue,           resolutionPolicy: revenue-pob-rule.resolution,     regulated: true,  effectKinds: [pob]}
+  - {code: settlement-rule,          owningContext: settlement,        resolutionPolicy: settlement-rule.resolution,      regulated: false, effectKinds: [settlement-item]}
+  - {code: cost-entry,               owningContext: finance,           resolutionPolicy: cost-entry.resolution,           regulated: false}
   - {code: policy,                   owningContext: policy,            resolutionPolicy: policy.resolution,               regulated: true}
 
 meters:
@@ -127,3 +132,4 @@ roles:
   - {code: governance-viewer,   sensitivity: standard,   permissions: [kg.query, decision.read]}
   - {code: party-viewer,        sensitivity: standard,   permissions: [party.read, kg.query]}
   - {code: agent-supervisor,    sensitivity: privileged, permissions: [config.kill-switch.activate, decision.read.trace, decision.override, identity.token.revoke]}
+  - {code: gl-accountant,       sensitivity: privileged, permissions: [accounting.read, accounting.entry.manual, accounting.export]}

@@ -261,7 +261,7 @@ domains:
   boundedContext: revenue
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-BIL
   name: Billing
   boundedContext: billing
@@ -273,7 +273,7 @@ domains:
   boundedContext: settlement
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-MKT
   name: Marketplaces
   boundedContext: marketplace
@@ -482,31 +482,31 @@ domains:
   boundedContext: finance
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-PRF
   name: Profitability
   boundedContext: finance
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-ACC
   name: Accounting
   boundedContext: finance
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-TAX
   name: Taxation
   boundedContext: finance
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-FCT
   name: Financial Controls
   boundedContext: finance
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-FRK
   name: Financial Risk
   boundedContext: risk
