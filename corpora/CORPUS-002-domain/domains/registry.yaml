@@ -333,13 +333,13 @@ domains:
   boundedContext: supply
   tier: extension
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-PKGN
   name: Packaging
   boundedContext: supply
   tier: extension
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-INV
   name: Inventory
   boundedContext: supply
@@ -560,25 +560,25 @@ domains:
   boundedContext: intelligence
   tier: extension
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-PLN
   name: Planning
   boundedContext: intelligence
   tier: extension
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-OPT
   name: Optimization
   boundedContext: intelligence
   tier: extension
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-SUS
   name: Sustainability
   boundedContext: sustainability
   tier: extension
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-SEC
   name: Security
   boundedContext: security
@@ -602,7 +602,7 @@ domains:
   boundedContext: risk
   tier: extension
   owningRole: Chief Security Architect
-  status: registered
+  status: specified
 - id: DOM-CYR
   name: Cyber Risk
   boundedContext: risk
@@ -639,13 +639,13 @@ domains:
   boundedContext: automation
   tier: extension
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-DTW
   name: Digital Twins
   boundedContext: digital-twin
   tier: extension
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-RTM
   name: Runtime
   boundedContext: runtime

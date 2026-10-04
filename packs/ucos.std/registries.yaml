@@ -138,3 +138,38 @@ roles:
   - {code: party-viewer,        sensitivity: standard,   permissions: [party.read, kg.query]}
   - {code: agent-supervisor,    sensitivity: privileged, permissions: [config.kill-switch.activate, decision.read.trace, decision.override, identity.token.revoke]}
   - {code: gl-accountant,       sensitivity: privileged, permissions: [accounting.read, accounting.entry.manual, accounting.export]}
+
+# Port registry (CIC-029-001 §1, owner DOM-EXT). Every "<Name>Port" referenced anywhere in the corpus
+# must be registered here (VR-EXT-01). kind: infrastructure (CIC-021-001 §1, I0 adapters) or
+# provider/extension (CIC-028-001 plugins).
+ports:
+  - {name: SqlStorePort,               version: 1.0.0, kind: infrastructure, owner: DOM-RTM}
+  - {name: EventBusPort,               version: 1.0.0, kind: infrastructure, owner: DOM-EVT}
+  - {name: CachePort,                  version: 1.0.0, kind: infrastructure, owner: DOM-RTM}
+  - {name: SearchIndexPort,            version: 1.0.0, kind: infrastructure, owner: DOM-SRC}
+  - {name: GraphStorePort,             version: 1.0.0, kind: infrastructure, owner: DOM-KGR}
+  - {name: ObjectStorePort,            version: 1.0.0, kind: infrastructure, owner: DOM-RTM}
+  - {name: KeyManagementPort,          version: 1.0.0, kind: infrastructure, owner: DOM-SEC}
+  - {name: SecretsPort,                version: 1.0.0, kind: infrastructure, owner: DOM-SEC}
+  - {name: AnalyticsStorePort,         version: 1.0.0, kind: infrastructure, owner: DOM-ANL}
+  - {name: TimeSeriesStorePort,        version: 1.0.0, kind: infrastructure, owner: DOM-DTW}
+  - {name: TelemetryBackendPort,       version: 1.0.0, kind: infrastructure, owner: DOM-OBS}
+  - {name: PolicyPort,                 version: 1.0.0, kind: infrastructure, owner: DOM-POL}
+  - {name: WorkflowEnginePort,         version: 1.0.0, kind: infrastructure, owner: DOM-WFL}
+  - {name: IdentityProviderPort,       version: 1.0.0, kind: provider,       owner: DOM-IDN}
+  - {name: PaymentProviderPort,        version: 1.0.0, kind: provider,       owner: DOM-PAY}
+  - {name: TaxEnginePort,              version: 1.0.0, kind: provider,       owner: DOM-TAX}
+  - {name: CarrierPort,                version: 1.0.0, kind: provider,       owner: DOM-LOG}
+  - {name: ProvisioningPort,           version: 1.0.0, kind: provider,       owner: DOM-SDL}
+  - {name: FulfillmentExecutionPort,   version: 1.0.0, kind: provider,       owner: DOM-FUL}
+  - {name: ManufacturingExecutionPort, version: 1.0.0, kind: provider,       owner: DOM-MFG}
+  - {name: ChannelPort,                version: 1.0.0, kind: provider,       owner: DOM-DST}
+  - {name: GeocoderPort,               version: 1.0.0, kind: provider,       owner: DOM-GEO}
+  - {name: MachineTranslationPort,     version: 1.0.0, kind: provider,       owner: DOM-LOC}
+  - {name: ModelPort,                  version: 1.0.0, kind: provider,       owner: DOM-INT}
+  - {name: EmbeddingPort,              version: 1.0.0, kind: provider,       owner: DOM-INT}
+  - {name: SolverPort,                 version: 1.0.0, kind: provider,       owner: DOM-OPT}
+  - {name: PriceModelPort,             version: 1.0.0, kind: extension,      owner: DOM-PRC}
+  - {name: ConfiguratorPort,           version: 1.0.0, kind: extension,      owner: DOM-OFR}
+  - {name: EffectDispatcherPort,       version: 1.0.0, kind: extension,      owner: DOM-LFC}
+  - {name: ValueSourcePort,            version: 1.0.0, kind: extension,      owner: DOM-CTX}

@@ -233,6 +233,41 @@ class Corpus:
             pc.check_roles(declared_perms)
             self.pack_stats[pdir.name] = pc.stats
             self.pack_policies |= {f"urn:ucos:{pdir.name}:policy:{n}" for n in pc.policies}
+        # VR-EXT-01: every "<Name>Port" named in the corpus is registered (command/query names excluded)
+        registered_ports: set[str] = set()
+        pack_ids: set[str] = set()
+        for pdir in sorted(d for d in PACKS.iterdir() if d.is_dir()) if PACKS.exists() else []:
+            regs = yaml.safe_load((pdir / "registries.yaml").read_text()) if (pdir / "registries.yaml").exists() else {}
+            registered_ports |= {p["name"] for p in (regs or {}).get("ports", [])}
+            man = yaml.safe_load((pdir / "pack.yaml").read_text()) if (pdir / "pack.yaml").exists() else {}
+            pack_ids.add((man or {}).get("id", pdir.name))
+        operations = set()
+        for spec in self.domain_specs.values():
+            operations |= {c["name"] for c in spec["doc"].get("commands", [])} | {q["name"] for q in spec["doc"].get("queries", [])}
+        for a in self.artifacts.values():
+            for port in sorted(set(re.findall(r"\b([A-Z][A-Za-z]+Port)\b", a["path"].read_text()))):
+                if port not in operations and port not in registered_ports:
+                    self.err(self._rel(a["path"]), f"port '{port}' not registered in a pack ports registry (VR-EXT-01)")
+        # CR-002-001-03 analogue for extension tier: plugin block required, I4, packs exist
+        for did, spec in self.domain_specs.items():
+            if self.registry.get(did, {}).get("tier") != "extension":
+                continue
+            plug = spec["doc"].get("plugin")
+            where = self._rel(spec["path"])
+            if not plug:
+                self.err(where, "extension-tier domain lacks 'plugin' block (CIC-002-001 §2, CIC-028-001)")
+                continue
+            if not str(plug.get("id", "")).startswith("ucos.ext."):
+                self.err(where, f"plugin id {plug.get('id')} must start with ucos.ext.")
+            if plug.get("isolation") != "I4":
+                self.err(where, "extension-tier bounded contexts must use isolation I4 (CIC-028-001 §1)")
+            for port in plug.get("consumesPorts", []) or []:
+                if port not in registered_ports:
+                    self.err(where, f"plugin consumes unregistered port {port} (VR-028-001-02)")
+            for req in plug.get("requiredPacks", []) or []:
+                if req.split("@")[0] not in pack_ids:
+                    self.err(where, f"plugin requires unknown pack {req}")
+
         # VR-CTX-02: every fact kind named in a domain spec ("fact kind <code>") is registered in a pack
         registered_fk: set[str] = set()
         for pdir in sorted(d for d in PACKS.iterdir() if d.is_dir()) if PACKS.exists() else []:
@@ -300,7 +335,8 @@ class Corpus:
         have = referenced & getattr(self, "pack_policies", set())
         lines.append(f"  ucos.std policies referenced by domain specs: {len(have)}/{len(referenced)} defined in pack")
         pending = sorted(d for d, r in self.registry.items() if r.get("status") not in ("specified", "realized", "subsumed"))
-        lines.append(f"  pending: {', '.join(pending)}")
+        if pending:
+            lines.append(f"  pending: {', '.join(pending)}")
         return "\n".join(lines)
 
 
