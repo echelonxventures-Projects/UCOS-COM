@@ -312,7 +312,7 @@ domains:
   boundedContext: supply
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-SUPN
   name: Supply Networks
   boundedContext: supply
@@ -724,7 +724,7 @@ domains:
   boundedContext: transaction
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
   origin: architect-added
 - id: DOM-ORD
   name: Order
@@ -738,5 +738,5 @@ domains:
   boundedContext: settlement
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
   origin: architect-added
