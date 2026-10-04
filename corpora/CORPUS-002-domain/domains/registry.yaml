@@ -179,13 +179,13 @@ domains:
   boundedContext: entitlement
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-CTR
   name: Contracts
   boundedContext: contract
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-LIC
   name: Licenses
   boundedContext: entitlement
@@ -221,7 +221,7 @@ domains:
   boundedContext: offer
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-CMP
   name: Campaigns
   boundedContext: offer
@@ -245,7 +245,7 @@ domains:
   boundedContext: catalog
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-PRC
   name: Pricing
   boundedContext: pricing
@@ -263,7 +263,7 @@ domains:
   boundedContext: billing
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-STL
   name: Settlement
   boundedContext: settlement
@@ -336,7 +336,7 @@ domains:
   boundedContext: supply
   tier: core
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-FUL
   name: Fulfillment
   boundedContext: fulfillment
@@ -731,7 +731,7 @@ domains:
   boundedContext: transaction
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
   origin: architect-added
 - id: DOM-PAY
   name: Payment
