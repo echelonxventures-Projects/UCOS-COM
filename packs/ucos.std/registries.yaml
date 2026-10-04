@@ -126,3 +126,4 @@ roles:
   - {code: organization-admin,  sensitivity: privileged, permissions: [organization.legal-entity.manage, organization.namespace.manage, organization.operating-role.designate]}
   - {code: governance-viewer,   sensitivity: standard,   permissions: [kg.query, decision.read]}
   - {code: party-viewer,        sensitivity: standard,   permissions: [party.read, kg.query]}
+  - {code: agent-supervisor,    sensitivity: privileged, permissions: [config.kill-switch.activate, decision.read.trace, decision.override, identity.token.revoke]}

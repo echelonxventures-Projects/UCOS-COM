@@ -61,7 +61,7 @@ domains:
   boundedContext: evidence
   tier: kernel
   owningRole: Chief Security Architect
-  status: registered
+  status: specified
 - id: DOM-EVD
   name: Evidence
   boundedContext: evidence
@@ -99,13 +99,14 @@ domains:
   boundedContext: ontology
   tier: kernel
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-KLC
   name: Knowledge Lifecycle
   boundedContext: ontology
   tier: kernel
   owningRole: Chief Governance Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-KNW
 - id: DOM-KGR
   name: Knowledge Graph
   boundedContext: graph
@@ -290,19 +291,19 @@ domains:
   boundedContext: context
   tier: kernel
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-GEO
   name: Geography
   boundedContext: context
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-TER
   name: Territory
   boundedContext: context
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-CTX
   name: Context
   boundedContext: context
@@ -643,13 +644,14 @@ domains:
   boundedContext: runtime
   tier: kernel
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-EXE
   name: Execution
   boundedContext: runtime
   tier: kernel
   owningRole: Chief Platform Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-RTM
 - id: DOM-OBS
   name: Observability
   boundedContext: runtime
@@ -673,19 +675,19 @@ domains:
   boundedContext: context
   tier: kernel
   owningRole: Chief Architect
-  status: registered
+  status: specified
 - id: DOM-VER
   name: Versioning
   boundedContext: lifecycle
   tier: kernel
   owningRole: Chief Architect
-  status: registered
+  status: specified
 - id: DOM-LIN
   name: Lineage
   boundedContext: evidence
   tier: kernel
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-EVO
   name: Evolution
   boundedContext: governance
@@ -697,19 +699,20 @@ domains:
   boundedContext: runtime
   tier: kernel
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-CMPS
   name: Composition
   boundedContext: commercial-object
   tier: kernel
   owningRole: Chief Product Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-COB
 - id: DOM-EXT
   name: Extension
   boundedContext: extension
   tier: kernel
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-CUS
   name: Customization
   boundedContext: extension
@@ -721,7 +724,7 @@ domains:
   boundedContext: extension
   tier: kernel
   owningRole: Chief Architect
-  status: registered
+  status: specified
 - id: DOM-QTE
   name: Quote
   boundedContext: transaction

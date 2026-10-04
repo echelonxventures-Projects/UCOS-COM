@@ -10,6 +10,13 @@ header:
   certification: [CR-COB-01, CR-COB-02, CR-COB-03, CR-COB-04, CR-COB-05]
   validation: [VR-COB-01, VR-COB-02]
 
+
+# Composition (DOM-CMPS) — bundles, packages, configurable structures — is the Composition entity of
+# the CommercialObject aggregate; a separate spec would split one aggregate's ownership (PRIN-001).
+subsumes:
+  - domain: DOM-CMPS
+    coverage: "Composition and ComponentSlot entities, DefineComposition command, composition-defined event, CompositionValidator, INV-COB-6, RUL-COB-3, COMPOSED_OF reltype (ucos.std)"
+
 purpose: >
   Hold the one and only record of every commercial thing — product, service, subscription, licence,
   plan, bundle, asset, experience, capability, or any future model — as a CommercialObject instance
