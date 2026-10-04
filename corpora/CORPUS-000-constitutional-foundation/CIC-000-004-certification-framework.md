@@ -1,7 +1,7 @@
 ---
 id: CIC-000-004
 title: Certification Framework
-version: 1.0.0
+version: 1.0.1
 status: normative
 authority: UCOS Constitutional Authority
 corpus: CORPUS-000
@@ -55,7 +55,7 @@ cap the level at L1.
 
 - **CR-000-004-01** The release pipeline blocks promotion of any subject lacking a non-expired CertificationRecord at the required level, matching the subject digest.
 - **CR-000-004-02** Every CertificationRecord rule result of `pass` references ≥ 1 Evidence whose digest verifies.
-- **CR-000-004-03** Revocation of a record emits `ucos.certification.record.revoked.v1` and the runtime deactivates the subject within 5 minutes (plugins/packs) or blocks next deploy (services).
+- **CR-000-004-03** Revocation of a record emits `ucos.governance.certification-record.revoked.v1` (declared by DOM-CRT) and the runtime deactivates the subject within 5 minutes (plugins/packs) or blocks next deploy (services).
 
 ## 5. Validation Rules
 

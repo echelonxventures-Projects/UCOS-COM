@@ -80,7 +80,7 @@ domains:
   boundedContext: governance
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-ONT
   name: Ontology
   boundedContext: ontology
@@ -369,7 +369,7 @@ domains:
   boundedContext: governance
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-WFL
   name: Workflow
   boundedContext: automation
@@ -408,25 +408,25 @@ domains:
   boundedContext: governance
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-CMPL
   name: Compliance
   boundedContext: governance
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-AUD
   name: Audit
   boundedContext: governance
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-TRC
   name: Traceability
   boundedContext: governance
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-PRV
   name: Provenance
   boundedContext: evidence
@@ -438,31 +438,31 @@ domains:
   boundedContext: data
   tier: core
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-DQL
   name: Data Quality
   boundedContext: data
   tier: core
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-DXC
   name: Data Exchange
   boundedContext: data
   tier: core
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-FED
   name: Federation
   boundedContext: data
   tier: core
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-IOP
   name: Interoperability
   boundedContext: data
   tier: core
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-EVT
   name: Events
   boundedContext: eventing
@@ -698,7 +698,7 @@ domains:
   boundedContext: governance
   tier: core
   owningRole: Chief Architect
-  status: registered
+  status: specified
 - id: DOM-CFG
   name: Configuration
   boundedContext: runtime
