@@ -16,6 +16,14 @@ header:
 subsumes:
   - domain: DOM-CMPS
     coverage: "Composition and ComponentSlot entities, DefineComposition command, composition-defined event, CompositionValidator, INV-COB-6, RUL-COB-3, COMPOSED_OF reltype (ucos.std)"
+  - domain: DOM-BDL
+    coverage: "ucos.std type Bundle (facet Composite), Composition entity, configurable composition with DOM-OFR Configurator, priceComposition attribute"
+  - domain: DOM-PKG
+    coverage: "ucos.std type Package (fixed composition constraint), Composition entity, Shippable facet"
+  - domain: DOM-AST
+    coverage: "ucos.std type Asset (facet Serviceable, OWNS_ASSET reltype, lifecycle 'asset'); assets created by order-decomposition task templates calling CreateCommercialObject; service state via DOM-SDL events"
+  - domain: DOM-CAP
+    coverage: "ucos.std type Capability (capabilityKey natural key), PROVIDES_CAPABILITY reltype; granted via DOM-ENT entitlementTemplate"
 
 purpose: >
   Hold the one and only record of every commercial thing — product, service, subscription, licence,

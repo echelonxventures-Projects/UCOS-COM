@@ -10,6 +10,13 @@ header:
   certification: [CR-ENT-01, CR-ENT-02, CR-ENT-03, CR-ENT-04]
   validation: [VR-ENT-01]
 
+
+# Licenses (DOM-LIC) are Entitling commercial objects (ucos.std type License) whose grants, licence
+# keys, activations, seats, and metering are entitlement behaviour specified here.
+subsumes:
+  - domain: DOM-LIC
+    coverage: "Entitlement aggregate for License-typed subjects, licence keys/activation tokens (scope), SeatAssignment, MeterAllowance, Transferable facet handling, CheckEntitlement/ConsumeEntitlement"
+
 purpose: >
   Record and enforce what a party is entitled to — access, usage, seats, quotas, features, service
   levels, benefits, licences — as a result of orders, contracts, memberships, grants, or policies,

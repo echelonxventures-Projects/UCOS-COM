@@ -74,7 +74,7 @@ domains:
   boundedContext: entitlement
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-SOV
   name: Sovereignty
   boundedContext: governance
@@ -195,25 +195,29 @@ domains:
   boundedContext: entitlement
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-ENT
 - id: DOM-BDL
   name: Bundles
   boundedContext: commercial-object
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-COB
 - id: DOM-PKG
   name: Packages
   boundedContext: commercial-object
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-COB
 - id: DOM-AST
   name: Assets
   boundedContext: commercial-object
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-COB
 - id: DOM-EXP
   name: Experiences
   boundedContext: commercial-object
@@ -231,19 +235,20 @@ domains:
   boundedContext: offer
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-PFL
   name: Portfolios
   boundedContext: catalog
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-CAP
   name: Capabilities
   boundedContext: commercial-object
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-COB
 - id: DOM-CAT
   name: Catalogs
   boundedContext: catalog
@@ -279,13 +284,13 @@ domains:
   boundedContext: marketplace
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-DST
   name: Distribution
   boundedContext: marketplace
   tier: core
   owningRole: Chief Product Architect
-  status: registered
+  status: specified
 - id: DOM-LOC
   name: Localization
   boundedContext: context
@@ -322,7 +327,7 @@ domains:
   boundedContext: supply
   tier: core
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-MFG
   name: Manufacturing
   boundedContext: supply
@@ -346,19 +351,19 @@ domains:
   boundedContext: fulfillment
   tier: core
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-LOG
   name: Logistics
   boundedContext: fulfillment
   tier: core
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-SDL
   name: Service Delivery
   boundedContext: fulfillment
   tier: core
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-GOV
   name: Governance
   boundedContext: governance
