@@ -1,0 +1,87 @@
+# ucos.std contributed registry entries (CIC-029-001 §1).
+factKinds:
+  - {code: attribute-value,          owningContext: commercial-object, resolutionPolicy: cob.contextual-precedence,       regulated: false}
+  - {code: localized-variant,        owningContext: context,           resolutionPolicy: localized-variant.resolution,    regulated: false}
+  - {code: price-entry,              owningContext: pricing,           resolutionPolicy: price-entry.resolution,          regulated: false}
+  - {code: price-adjustment,         owningContext: pricing,           resolutionPolicy: price-adjustment.resolution,     regulated: false, effectKinds: [percent, amount, override, fixed-price, free-units]}
+  - {code: catalog,                  owningContext: catalog,           resolutionPolicy: catalog.resolution,              regulated: false}
+  - {code: catalog-exclusion,        owningContext: catalog,           resolutionPolicy: catalog-exclusion.resolution,    regulated: false, effectKinds: [exclude]}
+  - {code: catalog-ordering,         owningContext: catalog,           resolutionPolicy: catalog-ordering.resolution,     regulated: false, effectKinds: [pin, boost, bury]}
+  - {code: offer,                    owningContext: offer,             resolutionPolicy: offer.resolution,                regulated: false}
+  - {code: eligibility,              owningContext: offer,             resolutionPolicy: eligibility.resolution,          regulated: false, effectKinds: [allow, deny]}
+  - {code: configuration-constraint, owningContext: offer,             resolutionPolicy: configuration-constraint.resolution, regulated: false, effectKinds: [require, exclude, limit, default]}
+  - {code: sellability-rule,         owningContext: supply,            resolutionPolicy: sellability-rule.resolution,     regulated: true,  effectKinds: [allow, deny]}
+  - {code: context-derivation,       owningContext: context,           resolutionPolicy: context-derivation.resolution,   regulated: false, effectKinds: [derive]}
+  - {code: order-decomposition,      owningContext: transaction,       resolutionPolicy: order-decomposition.resolution,  regulated: false, effectKinds: [task-template]}
+  - {code: policy,                   owningContext: policy,            resolutionPolicy: policy.resolution,               regulated: true}
+
+meters:
+  - {code: api-calls,        unit: "{call}",   aggregation: sum}
+  - {code: data-volume,      unit: "GBy",      aggregation: sum}
+  - {code: storage-gb-month, unit: "GBy.mo",   aggregation: time-weighted-average}
+  - {code: voice-minutes,    unit: "min",      aggregation: sum}
+  - {code: messages,         unit: "{message}", aggregation: sum}
+  - {code: active-seats,     unit: "{seat}",   aggregation: max}
+  - {code: compute-hours,    unit: "h",        aggregation: sum}
+  - {code: ai-tokens,        unit: "{token}",  aggregation: sum}
+  - {code: transactions,     unit: "{transaction}", aggregation: count}
+
+purposes:
+  - {code: contract-performance, legalBases: [contract]}
+  - {code: billing,              legalBases: [contract, legal-obligation]}
+  - {code: shipping,             legalBases: [contract]}
+  - {code: support,              legalBases: [contract, legitimate-interest]}
+  - {code: fraud-prevention,     legalBases: [legitimate-interest, legal-obligation]}
+  - {code: legal-obligation,     legalBases: [legal-obligation]}
+  - {code: tax-determination,    legalBases: [legal-obligation]}
+  - {code: marketing-email,      legalBases: [consent]}
+  - {code: marketing-personalization, legalBases: [consent]}
+  - {code: analytics-aggregate,  legalBases: [legitimate-interest]}
+
+effectKinds:
+  - {kind: set-attribute,   dispatcher: in-transaction}
+  - {kind: emit-event,      dispatcher: outbox}
+  - {kind: send-command,    dispatcher: outbox}
+  - {kind: start-workflow,  dispatcher: automation}
+  - {kind: notify,          dispatcher: automation}
+  - {kind: attach-evidence, dispatcher: evidence}
+  - {kind: schedule,        dispatcher: lifecycle}
+
+requirementKinds: [approval, evidence, certification, checklist]
+
+evidenceKinds:
+  - {kind: approval,     retentionClass: standard}
+  - {kind: signature,    retentionClass: regulated}
+  - {kind: acceptance,   retentionClass: regulated}
+  - {kind: consent,      retentionClass: regulated}
+  - {kind: test-report,  retentionClass: standard}
+  - {kind: scan-report,  retentionClass: standard}
+  - {kind: sbom,         retentionClass: standard}
+  - {kind: attestation,  retentionClass: standard}
+  - {kind: document,     retentionClass: standard}
+  - {kind: log-segment,  retentionClass: regulated}
+  - {kind: decision-snapshot, retentionClass: regulated}
+
+reasonCodes:
+  - {code: R-ENT-SUSPENDED,        decisionTypes: [entitlement-check], messageKey: reason.ent.suspended}
+  - {code: R-ENT-QUOTA-EXHAUSTED,  decisionTypes: [entitlement-check], messageKey: reason.ent.quota}
+  - {code: R-AVL-EMBARGO,          decisionTypes: [availability],      messageKey: reason.avl.embargo}
+  - {code: R-AVL-AGE-RESTRICTED,   decisionTypes: [availability],      messageKey: reason.avl.age}
+  - {code: R-AVL-LICENCE-REQUIRED, decisionTypes: [availability],      messageKey: reason.avl.licence}
+  - {code: R-OFR-NOT-ELIGIBLE,     decisionTypes: [eligibility],       messageKey: reason.ofr.ineligible}
+  - {code: R-OFR-EXISTING-ENTITLEMENT-CONFLICT, decisionTypes: [eligibility], messageKey: reason.ofr.conflict}
+  - {code: R-ORD-RISK-HIGH,        decisionTypes: [order-acceptance],  messageKey: reason.ord.risk}
+  - {code: R-ORD-PAYMENT-DECLINED, decisionTypes: [order-acceptance],  messageKey: reason.ord.payment}
+  - {code: R-PAY-SOFT-DECLINE,     decisionTypes: [payment-routing],   messageKey: reason.pay.soft}
+  - {code: R-PAY-HARD-DECLINE,     decisionTypes: [payment-routing],   messageKey: reason.pay.hard}
+
+taxonomies:
+  - {code: ucos.std.markets,          hierarchical: true,  seedTerms: [global]}
+  - {code: ucos.std.channels,         hierarchical: true,  seedTerms: [direct, direct.web, direct.app, direct.store, direct.call-center, indirect, indirect.reseller, indirect.marketplace, indirect.agent, machine, machine.api, machine.ai-agent]}
+  - {code: ucos.std.touchpoints,      hierarchical: true,  seedTerms: [browse, search, checkout, self-service, assisted]}
+  - {code: ucos.std.party-segments,   hierarchical: true,  seedTerms: [consumer, business, business.smb, business.enterprise, public-sector]}
+  - {code: ucos.std.price-list-tiers, hierarchical: false, seedTerms: [list, partner, wholesale, employee]}
+  - {code: ucos.std.party-roles,      hierarchical: false, seedTerms: [customer, buyer, payer, supplier, partner, reseller, employee, regulator, beneficiary, agent-principal]}
+  - {code: ucos.std.device-classes,   hierarchical: false, seedTerms: [desktop, mobile, tablet, kiosk, voice, headless]}
+  - {code: ucos.std.jurisdictions,    hierarchical: true,  seedTerms: [], note: "Populated by jurisdiction packs (country, subdivision, tax districts)"}
+  - {code: ucos.std.geo-areas,        hierarchical: true,  seedTerms: [], note: "ISO 3166-1/-2 plus tenant areas"}

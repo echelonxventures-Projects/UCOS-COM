@@ -19,9 +19,12 @@ import yaml
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
+from pack_checks import PackChecker
+
 ROOT = Path(__file__).resolve().parent.parent
 CORPORA = ROOT / "corpora"
 SCHEMAS = ROOT / "schemas"
+PACKS = ROOT / "packs"
 
 RULE_DEF_MD = re.compile(r"^- \*\*((?:CR|VR)-[A-Z0-9-]+)\*\*", re.M)
 PRINCIPLE_ROW = re.compile(r"^\| (PRIN-\d{3}) \|", re.M)
@@ -191,10 +194,33 @@ class Corpus:
             if row.get("status") == "specified" and did not in self.domain_specs:
                 self.err("registry", f"{did} marked specified but no DOM file (VR-002-002-02)")
 
+        self.check_packs()
+
         manifest_ids = {c["id"] for c in self.manifest["corpora"]}
         for a in self.artifacts.values():
             if a["header"].get("corpus") not in manifest_ids:
                 self.err(self._rel(a["path"]), f"corpus {a['header'].get('corpus')} not in corpus.yaml")
+
+    def check_packs(self) -> None:
+        texts = {aid: a["path"].read_text() for aid, a in self.artifacts.items() if a["path"].suffix == ".md"}
+        kinds_sec = texts["CIC-000-002"].split("## 4. Kind registry", 1)[1].split("## 5", 1)[0]
+        kernel_kinds = set(re.findall(r"[a-z][a-z-]*", " ".join(re.findall(r"`([^`]*)`", kinds_sec))))
+        dims_par = texts["CIC-011-001"].split("`ucos.std` dimensions", 1)[1].split("Tenants add", 1)[0]
+        std_dims = re.findall(r"`([a-z][a-z-]*)`", dims_par)
+        declared: dict[str, set[str]] = defaultdict(set)
+        specified_ctx = set()
+        for did, spec in self.domain_specs.items():
+            ctx = self.registry.get(did, {}).get("boundedContext")
+            specified_ctx.add(ctx)
+            for ev in spec["doc"].get("events", []):
+                declared[ctx].add(ev["type"])
+        self.pack_stats = {}
+        self.pack_policies: set[str] = set()
+        for pdir in sorted(d for d in PACKS.iterdir() if d.is_dir()) if PACKS.exists() else []:
+            pc = PackChecker(pdir, self.err, kernel_kinds, std_dims, self.registry, declared, specified_ctx)
+            pc.run()
+            self.pack_stats[pdir.name] = pc.stats
+            self.pack_policies |= {f"urn:ucos:{pdir.name}:policy:{n}" for n in pc.policies}
 
     def _check_acyclic(self) -> None:
         WHITE, GREY, BLACK = 0, 1, 2
@@ -224,15 +250,28 @@ class Corpus:
             mark = "✔" if arts else "·"
             lines.append(f"{mark} {c['id']} {c['title']:<40} {len(arts):>3} artifacts")
         spec = sum(1 for r in self.registry.values() if r.get("status") == "specified")
+        real = sum(1 for r in self.registry.values() if r.get("status") == "realized")
         lines += ["", "DOMAIN COVERAGE", "=" * 72,
-                  f"{spec}/{len(self.registry)} domains fully specified (25 sections)"]
+                  f"{spec}/{len(self.registry)} domains fully specified (25 sections), "
+                  f"{real} realized by type packs, {len(self.registry) - spec - real} pending"]
         by_tier = defaultdict(lambda: [0, 0])
         for r in self.registry.values():
             by_tier[r["tier"]][1] += 1
-            by_tier[r["tier"]][0] += r.get("status") == "specified"
+            by_tier[r["tier"]][0] += r.get("status") in ("specified", "realized")
         for tier, (s, n) in sorted(by_tier.items()):
             lines.append(f"  {tier:<10} {s:>3}/{n}")
-        pending = sorted(d for d, r in self.registry.items() if r.get("status") != "specified")
+        lines += ["", "TYPE PACKS", "=" * 72]
+        for name, st in getattr(self, "pack_stats", {}).items():
+            lines.append(f"  {name}: " + ", ".join(f"{k}={v}" for k, v in st.items()))
+        referenced = set()
+        for spec in self.domain_specs.values():
+            for p in spec["doc"].get("policies", []):
+                u = p.get("urn", "")
+                if u.startswith("urn:ucos:ucos.std:policy:") and "<" not in u:
+                    referenced.add(u)
+        have = referenced & getattr(self, "pack_policies", set())
+        lines.append(f"  ucos.std policies referenced by domain specs: {len(have)}/{len(referenced)} defined in pack")
+        pending = sorted(d for d, r in self.registry.items() if r.get("status") not in ("specified", "realized"))
         lines.append(f"  pending: {', '.join(pending)}")
         return "\n".join(lines)
 
@@ -249,8 +288,9 @@ def main() -> int:
         for e in c.errors:
             print(f"  ✗ {e}")
         return 1
+    packs = ", ".join(f"{n} ({s.get('types', 0)} types, {s.get('instances', 0)} fixtures)" for n, s in getattr(c, "pack_stats", {}).items())
     print(f"OK — {len(c.artifacts)} artifacts, {len(c.domain_specs)} domain specs, "
-          f"{len(c.rule_owner)} rules, {len(c.principles)} principles validated.")
+          f"{len(c.rule_owner)} rules, {len(c.principles)} principles, packs: {packs or 'none'} validated.")
     return 0
 
 

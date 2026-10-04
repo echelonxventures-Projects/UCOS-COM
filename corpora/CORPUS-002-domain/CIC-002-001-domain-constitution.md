@@ -34,14 +34,16 @@ Memberships, Experiences — and any future commercial model — are `TypeDefini
 
 ```
 urn:ucos:ucos.std:type:CommercialObject@1.0.0         (abstract root, kernel)
-├── urn:ucos:ucos.std:type:Product        facets: [Identifiable, Classifiable, Priceable, Stockable?, Shippable?]
-├── urn:ucos:ucos.std:type:Service        facets: [Priceable, Schedulable, Deliverable]
-├── urn:ucos:ucos.std:type:Subscription   facets: [Priceable, Recurring, Entitling, Renewable]
-├── urn:ucos:ucos.std:type:Membership     facets: [Entitling, Recurring, Tiered]
-├── urn:ucos:ucos.std:type:License        facets: [Entitling, Metered?, Transferable?]
-├── urn:ucos:ucos.std:type:Experience     facets: [Schedulable, Capacity-bound, Priceable]
+├── urn:ucos:ucos.std:type:Product        facets: [Classifiable, Priceable, Fulfillable, Stockable?, Shippable?]
+├── urn:ucos:ucos.std:type:Service        facets: [Priceable, Fulfillable, Deliverable, Schedulable?]
+├── urn:ucos:ucos.std:type:Subscription   facets: [Priceable, Recurring, Renewable, Entitling, Metered?]
+├── urn:ucos:ucos.std:type:Membership     facets: [Entitling, Tiered, Recurring?]
+├── urn:ucos:ucos.std:type:License        facets: [Entitling, Priceable, Metered?, Transferable?]
+├── urn:ucos:ucos.std:type:Experience     facets: [Schedulable, CapacityBound, Priceable]
 ├── urn:ucos:ucos.std:type:Bundle         facets: [Composite, Priceable]
 └── urn:ucos:com.acme.telco:type:MobilePlan  extends Subscription, facets +[Metered, NumberBound]
+
+(`?` = optional facet. Normative definitions: `packs/ucos.std/types.yaml`, CIC-029-001 §4.)
 ```
 
 ## 3. Bounded contexts and context map

@@ -11,7 +11,11 @@ corpora/CORPUS-NNN-<slug>/      Normative artifacts (Markdown + YAML front matte
 corpora/CORPUS-002-domain/domains/
     registry.yaml               Every constitutional domain: code, bounded context, owner, tier, status
     DOM-<CODE>.yaml             Full 25-section domain specification
+packs/ucos.std/                 Normative standard Type Pack (CIC-029-001): attributes, facets, types,
+                                relationship types, lifecycles, context dimensions, registries, policies, fixtures
 tools/validate.py               Corpus validator (headers, dependencies, traceability, domain completeness)
+tools/pack_checks.py            Static Type Pack checks (references, C3 linearization, lifecycle soundness,
+                                dimensions, policy test vectors, fixture instances vs effective schemas)
 ```
 
 ## Reading order
@@ -27,3 +31,4 @@ python3 tools/validate.py --coverage # coverage report: which corpora/domains ar
 ```
 
 The validator is the gate defined in `CIC-000-004` (CR-000-004-01): no artifact is normative unless it validates.
+It also validates every pack under `packs/`; a pack defect fails the corpus.

@@ -1,7 +1,7 @@
 ---
 id: CIC-011-001
 title: Context Model and Context Resolution Algorithm
-version: 1.0.0
+version: 1.1.0
 status: normative
 authority: Chief Architect
 corpus: CORPUS-011
@@ -27,7 +27,7 @@ ContextDimension:
   urn: urn:ucos:<ns>:dim:<code>@<semver>      # e.g. urn:ucos:ucos.std:dim:market@1.0.0
   code: string                                 # ^[a-z][a-z0-9-]{1,31}$
   valueType: enum | hierarchical-enum | range | instance-ref | boolean
-  valueSource: {kind: taxonomy|party|geo|inline|plugin, ref: urn}   # where valid values live
+  valueSource: {kind: taxonomy|party|geo|registry|instance|inline|plugin, ref: urn}   # where valid values live
   hierarchy: {relTypeRef: urn}?                # for hierarchical-enum: parent edges (e.g. geo: city→region→country→continent)
   weight: integer 1..1000                      # specificity weight (higher = more specific when matched)
   defaultPrecedence: integer                   # tie-break ordering among dimensions (lower = considered first)

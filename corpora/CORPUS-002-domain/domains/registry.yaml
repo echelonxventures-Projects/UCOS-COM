@@ -22,7 +22,7 @@ tierDefinitions:
   extension: Optional bounded context deployed as a certified plugin (CORPUS-028).
 validationRules:
   VR-002-002-01: Every domain id is unique and matches ^DOM-[A-Z]{3,5}$.
-  VR-002-002-02: A domain with status 'specified' has a DOM-<CODE>.yaml file validating against schemas/domain-spec.schema.json.
+  VR-002-002-02: A domain with status 'specified' has a DOM-<CODE>.yaml file validating against schemas/domain-spec.schema.json; a domain with status 'realized' has tier 'pack' and is listed in a pack's pack.yaml 'realizes' map.
 domains:
 - id: DOM-IDN
   name: Identity
@@ -155,25 +155,25 @@ domains:
   boundedContext: commercial-object
   tier: pack
   owningRole: Chief Product Architect
-  status: registered
+  status: realized
 - id: DOM-SVC
   name: Services
   boundedContext: commercial-object
   tier: pack
   owningRole: Chief Product Architect
-  status: registered
+  status: realized
 - id: DOM-SUB
   name: Subscriptions
   boundedContext: commercial-object
   tier: pack
   owningRole: Chief Product Architect
-  status: registered
+  status: realized
 - id: DOM-MBR
   name: Memberships
   boundedContext: commercial-object
   tier: pack
   owningRole: Chief Product Architect
-  status: registered
+  status: realized
 - id: DOM-ENT
   name: Entitlements
   boundedContext: entitlement
@@ -215,7 +215,7 @@ domains:
   boundedContext: commercial-object
   tier: pack
   owningRole: Chief Product Architect
-  status: registered
+  status: realized
 - id: DOM-OFR
   name: Offers
   boundedContext: offer

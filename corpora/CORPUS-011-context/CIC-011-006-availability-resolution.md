@@ -15,7 +15,7 @@ validation: [VR-011-006-01]
 
 Availability unifies physical stock, capacity (services, experiences, seats), licence pools, and
 regulatory/commercial sellability. Each object's type facets determine which **availability sources**
-apply: `Stockable → inventory`, `Capacity-bound → capacity calendar`, `Entitling → licence pool`,
+apply: `Stockable → inventory`, `CapacityBound → capacity calendar`, `Entitling → licence pool`,
 all types → `sellability rules`.
 
 ## 1. Output
@@ -41,7 +41,7 @@ function ResolveAvailability(objects, ctx, qty?):
             nodes ← SourcingNodes(ctx)        # fulfillment-node dimension or sourcing policy (geo radius, ship-to territory)
             atp_n ← OnHand_n − Reserved_n − SafetyStock(n, o, ctx) + Σ InboundBefore(horizon)_n
             atp   ← Σ_n atp_n  (or best-node only when policy single-node-fulfillment)
-        if Capacity-bound:
+        if CapacityBound:
             atp ← CapacityCalendar.free(o, ctx.timeWindow)
         if Entitling and pooled:
             atp ← Pool.remaining(o, ctx.organization)
