@@ -1,7 +1,7 @@
 ---
 id: CIC-023-001
 title: Testing Constitution
-version: 1.0.0
+version: 1.0.1
 status: normative
 authority: Chief Systems Engineer
 corpus: CORPUS-023
@@ -15,14 +15,16 @@ validation: [VR-023-001-01, VR-023-001-02]
 
 ## 1. Test taxonomy
 
-| Level | Scope | Tooling (reference) | Gate |
+Tooling is illustrative; any language-equivalent tool run in a container satisfies the level (CIC-001-001 §1.1).
+
+| Level | Scope | Tooling (examples) | Gate |
 |-------|-------|---------------------|------|
 | Unit | Domain model, pure functions | JUnit 5 / Kotest, Vitest | PR |
 | Property | Resolution algorithms, invariants, money arithmetic | jqwik / Kotest property, fast-check | PR |
 | Mutation | `-domain` modules | PIT, Stryker | Nightly; release gate ≥ 80 % |
 | Component | One service with real DB/broker (Testcontainers) | Testcontainers | PR |
 | Contract | API (provider + consumer), events (AsyncAPI) | Schemathesis, Pact, AsyncAPI validators | PR |
-| Conformance | Corpus CR rules (algorithms, ports, adapters) | `ucos-testkit` suites | Release |
+| Conformance | Corpus CR rules (algorithms, ports, adapters) | Black-box `conformance/` suites + golden vectors (CIC-030-001 §5.1) | Release |
 | Scenario (E2E) | Business journeys across contexts | Gherkin features over SDK | Nightly + release |
 | Performance | SLO verification | k6 / Gatling with production-like data | Release (L2) |
 | Resilience | Chaos, failure injection, DR | Chaos Mesh / Litmus, Toxiproxy | Weekly + release |

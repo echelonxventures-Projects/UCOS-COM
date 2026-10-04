@@ -1,7 +1,7 @@
 header:
   id: DOM-CTX
   title: Context Domain Specification
-  version: 1.1.0
+  version: 1.1.1
   status: normative
   authority: Chief Architect
   corpus: CORPUS-002
@@ -189,7 +189,7 @@ extensionModel:
   forbidden: ["Overriding ucos.std dimension weights except via tenant-layer configuration policy"]
 
 certificationCriteria:
-  - {id: CR-CTX-01, rule: "ucos-context-runtime passes CIC-011-001 CR-011-001-01..04.", level: L1}
+  - {id: CR-CTX-01, rule: "Every ucos-context-runtime implementation (one per language, CIC-001-001 §1.1) passes CIC-011-001 CR-011-001-01..04.", level: L1}
   - {id: CR-CTX-02, rule: "Derivation cycle detection rejects 100% of generated cyclic rule sets.", level: L1}
   - {id: CR-CTX-03, rule: "Closure table equals transitive closure computed from hierarchy edges after 10^4 random edge mutations.", level: L1}
 validationRules:

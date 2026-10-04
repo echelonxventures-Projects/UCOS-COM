@@ -14,19 +14,21 @@ corpora/CORPUS-002-domain/domains/
 packs/ucos.std/                 Normative standard Type Pack (CIC-029-001): attributes, facets, types,
                                 relationship types, lifecycles, context dimensions, registries, policies, fixtures
 tools/validate.py               Corpus validator (headers, dependencies, traceability, domain completeness)
+amendments/AMD-NNNN-*.md        Amendment records (CIC-000-001 §5): decision, rationale, affected artifacts, impact
 tools/pack_checks.py            Static Type Pack checks (references, C3 linearization, lifecycle soundness,
                                 dimensions, policy test vectors, fixture instances vs effective schemas)
 ```
 
-## Status (corpus 1.0.0)
+## Status (corpus 1.1.0)
 
 | Measure | Value |
 |---------|-------|
 | Corpora with normative artifacts | 31 / 31 |
 | Domains covered | 117 / 117 — 99 fully specified (25 sections), 5 realized by the `ucos.std` pack, 13 subsumed by a parent spec (declared under `subsumes`) |
 | Tiers | kernel 39/39, core 64/64, pack 5/5, extension 9/9 (extension domains ship as I4 bounded-context plugins, `plugin:` block) |
-| Rules | 760 certification/validation rules, each defined once and traced |
+| Rules | 763 certification/validation rules, each defined once and traced |
 | `ucos.std` pack | 26 types, 72 attributes, 18 facets, 15 relationship types, 9 lifecycle models, 21 context dimensions, 204 policies (195 referenced by specs), 30 ports, 24 fixture instances |
+| Amendments | AMD-0001 (1.1.0): the reference implementation is language- and toolchain-agnostic, contract-first and polyglot, with container-only builds |
 | Executable checks | CEL policy test vectors executed by the validator (with `cel-python`) |
 
 Domain registry statuses: `specified` (DOM file), `realized` (pack-tier, realized by a pack), `subsumed`
@@ -48,3 +50,5 @@ python3 tools/validate.py --coverage # coverage report: which corpora/domains ar
 The validator is the gate defined in `CIC-000-004` (CR-000-004-01): no artifact is normative unless it validates.
 It also validates every pack under `packs/`; a pack defect fails the corpus. CI runs it on every push
 (`.github/workflows/validate.yml`).
+
+The reference implementation is the private repository `UCOS-RI` (CIC-030-001 §5), which vendors this corpus at a release tag.

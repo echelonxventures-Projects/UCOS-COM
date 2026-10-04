@@ -1,7 +1,7 @@
 ---
 id: CIC-011-001
 title: Context Model and Context Resolution Algorithm
-version: 1.1.0
+version: 1.1.1
 status: normative
 authority: Chief Architect
 corpus: CORPUS-011
@@ -204,7 +204,7 @@ write event; therefore no TTL-based staleness for correctness, TTL only for memo
 
 ## 8. Certification Rules
 
-- **CR-011-001-01** Determinism: the reference implementation (`ucos-context-runtime`) and the module under test produce byte-identical Resolution (excluding timing) for 10⁶ generated (store, ctx, cfg) cases.
+- **CR-011-001-01** Determinism: the module under test produces Resolutions byte-identical (excluding timing) to the published golden vectors and to every certified `ucos-context-runtime` implementation (any language, CIC-001-001 §1.1) for 10⁶ generated (store, ctx, cfg) cases.
 - **CR-011-001-02** Metamorphic test: adding a candidate with universal scope never changes the result when a more specific candidate matched.
 - **CR-011-001-03** Fallback test suite: every ucos.std dimension hierarchy fallback order matches §3.3 exactly.
 - **CR-011-001-04** Performance: Resolve p99 ≤ 2 ms in-process with ≤ 1,000 candidates; ≤ 8 ms including candidate fetch from a warm cache.
