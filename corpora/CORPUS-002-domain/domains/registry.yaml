@@ -375,7 +375,7 @@ domains:
   boundedContext: automation
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-LFC
   name: Lifecycle
   boundedContext: lifecycle
@@ -620,19 +620,20 @@ domains:
   boundedContext: automation
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-WFL
 - id: DOM-ORC
   name: Orchestration
   boundedContext: automation
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-AGT
   name: Agents
   boundedContext: automation
   tier: core
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-ACM
   name: Autonomous Commerce
   boundedContext: automation
@@ -663,19 +664,19 @@ domains:
   boundedContext: runtime
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-MON
   name: Monitoring
   boundedContext: runtime
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-RLB
   name: Reliability
   boundedContext: runtime
   tier: core
   owningRole: Chief Systems Engineer
-  status: registered
+  status: specified
 - id: DOM-TIM
   name: Time
   boundedContext: context
@@ -724,7 +725,7 @@ domains:
   boundedContext: extension
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-FUT
   name: Future Compatibility
   boundedContext: extension
