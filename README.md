@@ -26,9 +26,11 @@ Follow the corpora in dependency order (`corpus.yaml` → `order`). CORPUS-000 d
 ## Validating
 
 ```
+pip install -r tools/requirements.txt  # pyyaml, jsonschema, cel-python (CEL policy vectors are skipped without it)
 python3 tools/validate.py            # full validation, non-zero exit on any violation
 python3 tools/validate.py --coverage # coverage report: which corpora/domains are specified
 ```
 
 The validator is the gate defined in `CIC-000-004` (CR-000-004-01): no artifact is normative unless it validates.
-It also validates every pack under `packs/`; a pack defect fails the corpus.
+It also validates every pack under `packs/`; a pack defect fails the corpus. CI runs it on every push
+(`.github/workflows/validate.yml`).

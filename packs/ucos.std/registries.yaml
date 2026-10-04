@@ -74,6 +74,8 @@ reasonCodes:
   - {code: R-ORD-PAYMENT-DECLINED, decisionTypes: [order-acceptance],  messageKey: reason.ord.payment}
   - {code: R-PAY-SOFT-DECLINE,     decisionTypes: [payment-routing],   messageKey: reason.pay.soft}
   - {code: R-PAY-HARD-DECLINE,     decisionTypes: [payment-routing],   messageKey: reason.pay.hard}
+  - {code: R-CAT-NOT-ELIGIBLE,     decisionTypes: [catalog-eligibility], messageKey: reason.cat.ineligible}
+  - {code: R-QTE-DISCOUNT-LIMIT,   decisionTypes: [authorization],     messageKey: reason.qte.discountlimit}
 
 taxonomies:
   - {code: ucos.std.markets,          hierarchical: true,  seedTerms: [global]}

@@ -221,6 +221,11 @@ class Corpus:
             pc.run()
             self.pack_stats[pdir.name] = pc.stats
             self.pack_policies |= {f"urn:ucos:{pdir.name}:policy:{n}" for n in pc.policies}
+        for did, spec in self.domain_specs.items():
+            for pol in spec["doc"].get("policies", []):
+                u = pol.get("urn", "")
+                if u.startswith("urn:ucos:ucos.std:policy:") and "<" not in u and u not in self.pack_policies:
+                    self.err(self._rel(spec["path"]), f"policy {u} not defined in packs/ucos.std (VR-POL-01)")
 
     def _check_acyclic(self) -> None:
         WHITE, GREY, BLACK = 0, 1, 2

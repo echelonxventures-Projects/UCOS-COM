@@ -22,6 +22,12 @@ VALUE_SOURCE_KINDS = {"taxonomy", "party", "geo", "registry", "instance", "inlin
 POLICY_KINDS = {"authorization", "configuration", "constraint", "selection"}
 POLICY_LAYERS = {"constitutional", "platform", "regulatory", "tenant", "organization", "delegated"}
 TRANSITION_KINDS = {"command", "timer", "event", "automatic"}
+try:  # optional: executes CEL policy test vectors (tools/requirements.txt)
+    import celpy
+    from celpy import celtypes
+except ImportError:  # pragma: no cover - environment dependent
+    celpy = None
+
 EVENT_TYPE = re.compile(r"^ucos\.[a-z0-9-]+\.[a-z0-9-]+\.[a-z0-9-]+\.v[0-9]+$")
 
 
@@ -369,10 +375,55 @@ class PackChecker:
                     self.err(f"policy {name}/{tv['name']}: expectedOutput violates outputSchema: {e.message}")
                 if body.get("language") == "static" and not tv.get("context") and tv.get("expectedOutput") != body.get("source"):
                     self.err(f"policy {name}/{tv['name']}: expectedOutput differs from static body")
+            if body.get("language") == "cel":
+                self._run_cel(name, body["source"], vectors)
+            reasons = {r["code"] for r in self.registries.get("reasonCodes", [])}
+            for tv in vectors:
+                rc = (tv.get("expectedOutput") or {}).get("reason") if isinstance(tv.get("expectedOutput"), dict) else None
+                if rc and rc not in reasons:
+                    self.err(f"policy {name}/{tv['name']}: reason code {rc} not registered")
             if p.get("kind") == "authorization":
                 effects = {tv.get("expectedOutput", {}).get("effect") for tv in vectors}
                 if not {"allow", "deny"} <= effects:
                     self.err(f"policy {name}: authorization policy needs allow and deny vectors (INV-POL-4)")
+
+    @staticmethod
+    def _from_cel(v):
+        if isinstance(v, celtypes.MapType):
+            return {str(k): PackChecker._from_cel(x) for k, x in v.items()}
+        if isinstance(v, celtypes.ListType):
+            return [PackChecker._from_cel(x) for x in v]
+        if isinstance(v, celtypes.BoolType):
+            return bool(v)
+        if isinstance(v, (celtypes.IntType, celtypes.UintType)):
+            return int(v)
+        if isinstance(v, celtypes.DoubleType):
+            return float(v)
+        if isinstance(v, celtypes.StringType):
+            return str(v)
+        return v
+
+    def _run_cel(self, name: str, source: str, vectors: list) -> None:
+        if celpy is None:
+            self.stats["celSkipped"] = self.stats.get("celSkipped", 0) + len(vectors)
+            return
+        env = celpy.Environment()
+        try:
+            prg = env.program(env.compile(source))
+        except Exception as e:  # compile error is a policy defect (INV-POL-1)
+            self.err(f"policy {name}: CEL does not compile: {e} (INV-POL-1)")
+            return
+        for tv in vectors:
+            act = dict(tv.get("input", {}))
+            act["ctx"] = tv.get("context", {})
+            try:
+                out = self._from_cel(prg.evaluate(celpy.json_to_cel(act)))
+            except Exception as e:
+                self.err(f"policy {name}/{tv['name']}: CEL evaluation error: {e}")
+                continue
+            self.stats["celExecuted"] = self.stats.get("celExecuted", 0) + 1
+            if out != tv.get("expectedOutput"):
+                self.err(f"policy {name}/{tv['name']}: CEL returned {out}, expected {tv.get('expectedOutput')} (INV-POL-1)")
 
     def check_manifest(self) -> None:
         for key in ("realizes", "seeds"):
