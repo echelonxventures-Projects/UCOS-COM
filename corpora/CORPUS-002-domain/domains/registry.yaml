@@ -475,13 +475,13 @@ domains:
   boundedContext: content
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-MED
   name: Media
   boundedContext: content
   tier: core
   owningRole: Chief Platform Architect
-  status: registered
+  status: specified
 - id: DOM-CST
   name: Cost
   boundedContext: finance
@@ -517,43 +517,44 @@ domains:
   boundedContext: risk
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-DSC
   name: Discovery
   boundedContext: intelligence
   tier: core
   owningRole: Chief AI Architect
-  status: registered
+  status: subsumed
+  subsumedBy: DOM-SRC
 - id: DOM-SRC
   name: Search
   boundedContext: intelligence
   tier: core
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-RCM
   name: Recommendations
   boundedContext: intelligence
   tier: core
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-INT
   name: Intelligence
   boundedContext: intelligence
   tier: core
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-ANL
   name: Analytics
   boundedContext: intelligence
   tier: core
   owningRole: Chief Data Architect
-  status: registered
+  status: specified
 - id: DOM-FCS
   name: Forecasting
   boundedContext: intelligence
   tier: core
   owningRole: Chief AI Architect
-  status: registered
+  status: specified
 - id: DOM-SIM
   name: Simulation
   boundedContext: intelligence
@@ -595,7 +596,7 @@ domains:
   boundedContext: risk
   tier: core
   owningRole: Chief Security Architect
-  status: registered
+  status: specified
 - id: DOM-CFT
   name: Counterfeit
   boundedContext: risk
@@ -607,13 +608,13 @@ domains:
   boundedContext: risk
   tier: core
   owningRole: Chief Security Architect
-  status: registered
+  status: specified
 - id: DOM-ORK
   name: Operational Risk
   boundedContext: risk
   tier: core
   owningRole: Chief Governance Architect
-  status: registered
+  status: specified
 - id: DOM-AUT
   name: Automation
   boundedContext: automation

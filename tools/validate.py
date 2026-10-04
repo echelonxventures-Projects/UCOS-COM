@@ -233,6 +233,15 @@ class Corpus:
             pc.check_roles(declared_perms)
             self.pack_stats[pdir.name] = pc.stats
             self.pack_policies |= {f"urn:ucos:{pdir.name}:policy:{n}" for n in pc.policies}
+        # VR-CTX-02: every fact kind named in a domain spec ("fact kind <code>") is registered in a pack
+        registered_fk: set[str] = set()
+        for pdir in sorted(d for d in PACKS.iterdir() if d.is_dir()) if PACKS.exists() else []:
+            regs = yaml.safe_load((pdir / "registries.yaml").read_text()) if (pdir / "registries.yaml").exists() else {}
+            registered_fk |= {f["code"] for f in (regs or {}).get("factKinds", [])}
+        for did, spec in self.domain_specs.items():
+            for fk in sorted(set(re.findall(r"fact kind ([a-z][a-z0-9]*(?:-[a-z0-9]+)+)", spec["path"].read_text()))):
+                if fk not in registered_fk:
+                    self.err(self._rel(spec["path"]), f"fact kind '{fk}' not registered in any pack (VR-CTX-02)")
         for did, spec in self.domain_specs.items():
             for pol in spec["doc"].get("policies", []):
                 u = pol.get("urn", "")

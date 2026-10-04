@@ -19,6 +19,10 @@ factKinds:
   - {code: revenue-pob-rule,         owningContext: revenue,           resolutionPolicy: revenue-pob-rule.resolution,     regulated: true,  effectKinds: [pob]}
   - {code: settlement-rule,          owningContext: settlement,        resolutionPolicy: settlement-rule.resolution,      regulated: false, effectKinds: [settlement-item]}
   - {code: cost-entry,               owningContext: finance,           resolutionPolicy: cost-entry.resolution,           regulated: false}
+  - {code: document-template,        owningContext: content,           resolutionPolicy: document-template.resolution,    regulated: false}
+  - {code: media-variant,            owningContext: content,           resolutionPolicy: media-variant.resolution,        regulated: false}
+  - {code: risk-rule,                owningContext: risk,              resolutionPolicy: risk-rule.resolution,            regulated: true,  effectKinds: [score, signal, band-override]}
+  - {code: quality-rule,             owningContext: data,              resolutionPolicy: quality-rule.resolution,         regulated: false, effectKinds: [finding]}
   - {code: policy,                   owningContext: policy,            resolutionPolicy: policy.resolution,               regulated: true}
 
 meters:
